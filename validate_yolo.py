@@ -20,6 +20,7 @@ def main():
     parser.add_argument("--data", type=Path, required=True, help="Путь к data.yaml")
     parser.add_argument("--out", type=Path, default=Path("output"), help="Каталог для результатов")
     parser.add_argument("--conf", type=float, default=0.25, help="Порог уверенности")
+    parser.add_argument("--seed", type=int, default=37, help="Случайное начальное число")
     args = parser.parse_args()
 
     out_dir = args.out
@@ -44,6 +45,7 @@ def main():
     model.val(
         data=str(tmp_yaml),
         save_json=True,
+        seed=int(args.seed),
         project=str(out_dir),
         name="val",
         exist_ok=True,
@@ -53,6 +55,7 @@ def main():
         source=data_cfg["path"] + '/images/val',
         conf=args.conf,
         save=True,
+        seed=int(args.seed),
         project=str(out_dir),
         name="pred",
         exist_ok=True,
