@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# pip install ultralytics pyyaml
-
 import argparse
 from pathlib import Path
 import yaml
@@ -26,12 +23,12 @@ def main():
     out_dir = args.out
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # загрузка и правка yaml
+    # Загрузка yaml
     data_path = args.data.resolve()
     with open(data_path, "r", encoding="utf-8") as f:
         data_cfg = yaml.safe_load(f)
 
-    # всегда прописываем абсолютный path
+    # Обход ошибки ultralytics с неправильной обработкой относительных путей
     data_cfg["path"] = str(data_path.parent.resolve())
 
     tmp_yaml = out_dir / "_data_resolved.yaml"
